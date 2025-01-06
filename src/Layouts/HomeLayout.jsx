@@ -1,10 +1,20 @@
 import { AiFillCloseCircle } from "react-icons/ai";
 import { FiMenu } from "react-icons/fi";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 import Footer from "../Components/Footer";
 
 function HomeLayout({children}){
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    // for checking if user is logged in
+    const isLoggedIn = useSelector((state) => state?.auth?.isLoggedIn);
+
+    //for displaying the option acc to role
+    const role = useSelector((state) => state?.auth?.role);
 
     function changeWidth(){
         const drawerSide = document.getElementsByClassName("drawer-side");
@@ -17,8 +27,16 @@ function HomeLayout({children}){
         element[0].checked = false;
 
         const drawerSide = document.getElementsByClassName("drawer-side");
-        drawerSide[0].style.width = 0;
+        drawerSide[0].style.width = '0';
     
+    }
+
+    function handleLogout(e){
+        e.preventDefault();
+
+        //const res = await dispatch(logout());
+        //if(res?.payload?.success)
+        navigate("/");
     }
 
     return(
@@ -46,6 +64,12 @@ function HomeLayout({children}){
                     <li>
                         <Link to="/">Home</Link>
                     </li>
+
+                    {isLoggedIn && role === 'ADMIN' && (
+                        <li>
+                            <link to="/admin/dashboard"> Admin DashBoard</link>
+                        </li>
+                    )}
                     <li>
                         <Link to="/courses">All Courses</Link>
                     </li>
@@ -55,6 +79,31 @@ function HomeLayout({children}){
                     <li>
                         <Link to="/about">About Us</Link>
                     </li>
+                    {!isLoggedIn && (
+                        <li className="w-full flex items-center justify-center">
+                        <div className="w-full flex items-center justify-center">
+                            <button className="btn-primary px-4 py-1 font-semibold rounded-md w-full bg-purple-700 hover:bg-purple-800">
+                                <Link to="/login">Login</Link>
+                            </button>
+                            <button className="btn-secondary px-4 py-1 font-semibold rounded-md w-full bg-yellow-400 hover:bg-yellow-500">
+                                <Link to="/login">Signup</Link>
+                            </button>
+                        </div>
+                        </li>
+                    )}
+
+                   {!isLoggedIn && (
+                        <li className="w-full flex items-center justify-center">
+                        <div className="w-full flex items-center justify-center">
+                            <button className="btn-primary px-4 py-1 font-semibold rounded-md w-full bg-purple-700 hover:bg-purple-800">
+                                <Link to="/user/profile">Profile</Link>
+                            </button>
+                            <button className="btn-secondary px-4 py-1 font-semibold rounded-md w-full bg-yellow-400 hover:bg-yellow-500">
+                                <Link onClick={handleLogout}>Logout</Link>
+                            </button>
+                        </div>
+                        </li>
+                    )}
                 </ul>
             </div>
         </div>
