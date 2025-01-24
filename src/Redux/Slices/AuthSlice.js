@@ -52,7 +52,7 @@ export const login = createAsyncThunk("auth/login", async (data) => {
 });
 
 // function to handle logout
-export const logout = createAsyncThunk("auth/logout", async () => {
+export const logout = createAsyncThunk("/auth/logout", async () => {
   try {
     let res = axiosInstance.post("/user/logout");
 
@@ -198,6 +198,7 @@ const authSlice = createSlice({
           localStorage.clear();
           state.isLoggedIn = false;
           state.data = {};
+          state.role = "";
         })
         // for user details
         .addCase(getUserData.fulfilled, (state, action) => {
