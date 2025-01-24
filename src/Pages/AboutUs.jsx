@@ -3,7 +3,6 @@ import CarouselSlide from "../Components/CarouselSlide";
 import { celebrities } from "../Constants/CelebrityData";
 import HomeLayout from "../Layouts/HomeLayout";
 function AboutUs(){
-    
     return (
         <HomeLayout>
             <div className="pl-20 pt-20 flex flex-col text-white">
