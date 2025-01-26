@@ -22,7 +22,6 @@ function HomeLayout({children}){
         drawerSide[0].style.width = 'auto';
     }
     
-
     function hideDrawer(){
         const element = document.getElementsByClassName("drawer-toggle");
         element[0].checked = false;
@@ -68,7 +67,12 @@ function HomeLayout({children}){
 
                     {isLoggedIn && role === 'ADMIN' && (
                         <li>
-                            <link to="/admin/dashboard"> Admin DashBoard</link>
+                            <Link to="/admin/dashboard"> Admin DashBoard</Link>
+                        </li>
+                    )}
+                    {isLoggedIn && role === 'ADMIN' && (
+                        <li>
+                            <Link to="/course/create"> Create new course</Link>
                         </li>
                     )}
                     <li>
